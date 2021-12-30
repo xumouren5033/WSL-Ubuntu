@@ -2,7 +2,7 @@
 
 这是一个用于Windows Subsystem for Linux（WSL）的 Ubuntu 20.04 LTS 自定义镜像。你也可以通过修改脚本来构建适合于你自己使用的自定义WSL镜像。
 
-已构建好的镜像文件请至 **Releases** 下载，使用方法请参阅 [安装WSL镜像](#安装WSL镜像)。
+已构建好的镜像文件请至 [**Releases**](https://github.com/Hazx/WSL-Ubuntu/releases) 下载，使用方法请参阅 [**安装WSL镜像**](#安装WSL镜像)。
 
 ![1.png](pic/1.png)
 
