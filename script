@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# 更换 apt 源
+mv /etc/apt/sources.list /etc/apt/sources.list.bk
+cat <<EOF > /etc/apt/sources.list
+deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+EOF
+apt update -y
+
+# 调整时区
+export DEBIAN_FRONTEND="noninteractive"
+apt install -y tzdata
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# 更新和安装组件
+apt full-upgrade -y
+## 基础组件
+apt install -y openssl curl vim wget zip unzip git lsof net-tools psmisc zlib1g gzip expect \
+    dnsutils lrzsz screen apt-transport-https ca-certificates lsb-release apt-utils \
+    aptitude software-properties-common sudo lvm2 gnupg
+## 扩展功能
+apt install -y neofetch
+## Docker cli
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+apt update -y
+apt install -y docker-ce-cli
+echo -e "export DOCKER_HOST=tcp://127.0.0.1:2375\n" >> /root/.bashrc
+
+# 中文支持
+apt install -y language-pack-zh-han*
+dpkg-reconfigure locales
+cat <<EOF > /etc/default/locale
+LANG=zh_CN.UTF-8
+LC_ALL=zh_CN.UTF-8
+EOF
+
+# 清理
+apt clean
+
+# 替换 systemctl
+mv /usr/bin/systemctl /usr/bin/systemctl.bk
+curl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py > /usr/bin/systemctl
+if [ "$?" != 0 ];then
+    exit 1
+fi
+chmod +x /usr/bin/systemctl
