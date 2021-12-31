@@ -18,7 +18,7 @@ docker build -t hazx_make_tmp:wslubuntu .
 if [ "$?" != 0 ];then
     exit 1
 fi
-docker run -d --privileged --name save_make hazx_make_tmp:wslubuntu
+docker run -d --privileged --name save_make hazx_make_tmp:wslubuntu bash
 docker stop save_make
 docker export -o save_make.tar save_make
 mkdir imagebase
