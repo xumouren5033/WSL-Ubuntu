@@ -7,10 +7,12 @@ if [[ $(id -u) -ne 0 ]];then
     exit 1
 fi
 # 构建 Dockerfile
-echo -e "FROM ${base_img}\n\n" > ./Dockerfile
-echo -e "ADD script /script.sh\n" >> ./Dockerfile
-echo -e "RUN chmod +x /script.sh && /script.sh\n" >> ./Dockerfile
-echo -e "CMD bash" >> ./Dockerfile
+cat <<EOF >> ./Dockerfile
+FROM ${base_img}
+ADD script /script.sh
+RUN chmod +x /script.sh && /script.sh
+CMD /usr/sbin/init
+EOF
 
 # 构建镜像
 docker pull ${base_img}
