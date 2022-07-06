@@ -3,16 +3,16 @@
 # 更换 apt 源
 mv /etc/apt/sources.list /etc/apt/sources.list.bk
 cat <<EOF > /etc/apt/sources.list
-deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb http://mirrors.bfsu.edu.cn/ubuntu/ focal main restricted universe multiverse
+# deb-src http://mirrors.bfsu.edu.cn/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.bfsu.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+# deb-src http://mirrors.bfsu.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
+deb http://mirrors.bfsu.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
+# deb-src http://mirrors.bfsu.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
+deb http://mirrors.bfsu.edu.cn/ubuntu/ focal-security main restricted universe multiverse
+# deb-src http://mirrors.bfsu.edu.cn/ubuntu/ focal-security main restricted universe multiverse
+# deb http://mirrors.bfsu.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
+# deb-src http://mirrors.bfsu.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 apt update -y
 
@@ -30,8 +30,10 @@ apt install -y openssl curl vim wget zip unzip git lsof net-tools psmisc zlib1g 
 ## 扩展功能
 apt install -y neofetch
 ## Docker cli
-curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
-add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+mkdir -p /etc/apt/keyrings/
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://mirrors.bfsu.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt update -y
 apt install -y docker-ce-cli
 echo -e "export DOCKER_HOST=tcp://127.0.0.1:2375\n" >> /root/.bashrc
