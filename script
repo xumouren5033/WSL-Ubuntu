@@ -26,7 +26,8 @@ apt full-upgrade -y
 ## 基础组件
 apt install -y openssl curl vim wget zip unzip git lsof net-tools psmisc zlib1g gzip expect \
     dnsutils lrzsz screen apt-transport-https ca-certificates lsb-release apt-utils \
-    aptitude software-properties-common sudo lvm2 gnupg
+    aptitude software-properties-common sudo lvm2 gnupg tree nmon bash-completion htop \
+    iputils-ping
 ## 扩展功能
 apt install -y neofetch
 ## Docker cli

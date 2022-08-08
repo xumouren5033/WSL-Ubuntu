@@ -1,6 +1,6 @@
 #!/bin/bash
 
-base_img="ubuntu:focal-20220531"
+base_img="ubuntu:focal-20220801"
 
 if [[ $(id -u) -ne 0 ]];then
     echo "必须在root账户下运行，请尝试使用 sudo -i 切换账户。"
