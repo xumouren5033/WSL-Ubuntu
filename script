@@ -39,6 +39,17 @@ apt update -y
 apt install -y docker-ce-cli
 echo -e "export DOCKER_HOST=tcp://127.0.0.1:2375\n" >> /root/.bashrc
 
+# 优化终端操作及显示
+sudo tee -a /root/.bashrc << EOF
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias grep='grep --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+PS1='[\${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\W\[\033[00m\]]\\$ '
+EOF
+
 # 中文支持
 apt install -y language-pack-zh-han*
 dpkg-reconfigure locales

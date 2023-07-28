@@ -8,31 +8,31 @@
 
 # 文件说明
 
-- script：用于自定义WSL镜像内容的脚本。你可以修改此文件来打包更多的功能。
+- script：用于自定义 WSL 镜像内容的脚本。你可以修改此文件来打包更多的功能。
 - start_make.sh：用于控制整个构建过程的脚本。
 
 # 构建镜像
 
 > 用于构建镜像的 Linux 环境需要提前安装 Docker，并能够联网。
 
-1. 切换账户（已是root账户可跳过此步）
+1. 切换账户（已是 root 账户可跳过此步）
 ```shell
 sudo -i
 ```
 
 2. 运行脚本
 ```shell
-chmod +x start_make.sh && ./start_make.sh
+bash start_make.sh
 ```
 脚本运行结束后会生成镜像包 `rootfs.tar.gz`，将此文件拷出来即可。
 
 # 安装WSL镜像
 
-> 用于安装 WSL 镜像的 Windows 10 必须高于 `2004` 版本。需要开启 Windows 功能【适用于 Linux 的 Windows 子系统】，若想启用WSL2则还需开启【虚拟机平台】。
+> WSL 可应用于 Windows 11 及 Windows 10 系统中，但 Windows 10 必须高于 `2004` 版本。需要开启 Windows 功能【适用于 Linux 的 Windows 子系统】，若想启用 WSL2 则还需开启【虚拟机平台】。
 
 ![2.png](pic/2.png)
 
-1. 在 C 盘或其他盘符下新建文件夹，名字不能带空格和特殊符号，这里以 D 盘下的 `Ubuntu` 文件夹为例
+1. 在 C 盘或其他盘符下新建文件夹，名字不能带空格和特殊符号，这里以 D 盘下的 `ubuntu` 文件夹为例
 
 2. 将镜像包 `rootfs.tar.gz` 拷贝至此文件夹中。
 
@@ -40,13 +40,13 @@ chmod +x start_make.sh && ./start_make.sh
 
 ```batch
 D:
-cd Ubuntu
+cd ubuntu
 ```
 
 4. 在 CMD 中执行以下命令，将镜像导入WSL
 
 ```batch
-wsl --import Ubuntu20.04 .\ .\rootfs.tar.gz
+wsl --import ubuntu .\ .\rootfs.tar.gz
 ```
 
 `--import` 后的3个参数分别为 WSL 系统名称（可自定义）、安装目录、镜像路径
@@ -62,14 +62,14 @@ wsl --list
 - 手动启动到某个 WSL：
 > WSL 可以安装多个，但除了默认 WSL 外，都需要使用此命令启动。
 ```batch
-wsl -d Ubuntu20.04
+wsl -d ubuntu
 ```
 - 将某个 WSL 设为默认：
 > 在 CMD 或 Powershell 中执行 `wsl` 或 `bash` 时默认调用的 WSL
 ```batch
-wsl -s Ubuntu20.04
+wsl -s ubuntu
 ```
 - 卸载某个 WSL：
 ```batch
-wsl --unregister Ubuntu20.04
+wsl --unregister ubuntu
 ```
