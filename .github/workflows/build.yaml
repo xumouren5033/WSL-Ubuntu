@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
@@ -32,7 +32,7 @@ jobs:
           # 定义变量
           UBUNTU_VERSION: ${{ github.event.inputs.ubuntuVersion }}
           CUSTOM_PACKAGES: ${{ github.event.inputs.customPackages }}
-          IMAGE_NAME: "wsl-${UBUNTU_VERSION}-image"
+          IMAGE_NAME: "wsl-${{ github.event.inputs.ubuntuVersion }}-image"
         run: |
           
 
