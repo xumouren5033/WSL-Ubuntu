@@ -32,7 +32,7 @@ jobs:
           # 定义变量
           UBUNTU_VERSION: ${{ github.event.inputs.ubuntuVersion }}
           CUSTOM_PACKAGES: ${{ github.event.inputs.customPackages }}
-          IMAGE_NAME: "wsl-${{ github.event.inputs.ubuntuVersion }}-image"
+          IMAGE_NAME: "wsl-image"
         run: |
           
 
